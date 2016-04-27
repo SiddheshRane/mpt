@@ -6,21 +6,21 @@ Programs * indicates not implemented)
   4. Finding the Smallest and Largest number from a given list
   5. Arranging a given list in ascending and descending order
   6. 8/16/32 bit addition
- *7. Addition of a series of numbers
+  7. Addition of a series of numbers
   8. 8/16/32 bit subtraction
- *9. Division of 16 bit number by 8 bit number
- *10. Multiplication of 8 bit number by 8 bit number
- *11. Multiplication of 8 bit number by 16 bit number
+  9. Division of 16 bit number by 8 bit number
+  10. Multiplication of 8 bit number by 8 bit number
+  11. Multiplication of 8 bit number by 16 bit number
   12. Finding the factorial of a given number
   13. Finding the Fibonacci series of n terms
- *14. Performing - (a + b) * (c + d)
- *15. Performing - (a * b) + (c * d)
+  14. Performing - (a + b) * (c + d)
+  15. Performing - (a * b) + (c * d)
   16. Finding the 1's complement of a given number
   17. Finding the 2's complement of a given number
   18. Check whether a number is even or odd
- *19. Multiplication by rotation and addition
- *20. Division by rotation and subtraction
- *21. Matrix addition and subtraction
+  19. Multiplication by rotation and addition
+  20. Division by rotation and subtraction
+  21. Matrix addition and subtraction
 
 Strings
 

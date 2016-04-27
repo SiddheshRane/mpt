@@ -4,7 +4,7 @@
 .data
 	a1 db 4 dup (?)
 	LEN EQU 4
-	msg1 db 10,13,"Enterr 8 array bytes: $"
+	msg1 db 10,13,"Enter 4 2-digit numbers: $"
 	msg2 db 10,13,"Smallest number is 0x$"
 	msg3 db 10,13,"Largest number is 0x$"
 
@@ -12,121 +12,92 @@
 	mov ax, @data
 	mov ds, ax
 	mov es, ax
-
-	mov ax, offset msg1
-	push ax
-	call puts
+	;display msg1
+	lea dx, msg1
+	mov ah, 09h
+	int 21h
 
 	mov cx, LEN
-	mov di, offset a1
+	lea di, a1
 	cld
 
-main__inp:
-	call scn2x
+getInput:
+	call input8
 	stosb
-	loop main__inp
+	loop getInput
 
-	mov si, offset a1
+	lea si, a1
 	mov cx, len
 	lodsb
 	dec cx
 	mov bl, al
 	mov bh, al
-main__find:
+find:
 	lodsb
 	cmp al, bl
-	ja main__higher
+	ja above
 	mov bl, al
-main__higher:
+above:
 	cmp al, bh
-	jb main__lower
+	jb below
 	mov bh, al
-main__lower:
-	loop main__find
+below:
+	loop find
 
 	; print output
-	mov ax, offset msg2
-	push ax
-	call puts
+	lea dx,msg2
+	mov ah, 09h
+	int 21h
 
 	mov ah, bl
 	push ax
 	mov ax, 2
 	push ax
-	call prt_x
+	call print8
 
-	mov ax, offset msg3
-	push ax
-	call puts
+	lea dx, msg3
+	mov ah, 09h
+	int 21h
 
 	mov ah, bh
 	push ax
 	mov ax, 2
 	push ax
-	call prt_x
+	call print8
 
 	mov ax, 4c00h
 	int 21h
 
 ;Libray Functions
-scn2x  proc
+input8  proc
 	push bx
 	push cx
 
-    mov ch, 2; characters to scan
-    mov cl, 4; bits in a nibble
-    mov bl, 0
-scn2x__nibble:
+	mov ch, 2; characters to scan
+	mov cl, 4; bits in a nibble
+	mov bl, 0
+parseNibble:
 	shl bl, cl
-    mov ah, 01h
-    int 21h
+	mov ah, 01h
+	int 21h
 
-    cmp al, 'A'
-    jb scn2x__digit
-    sub al, 07h; Difference between 'A' and '9'
-scn2x__digit:
+	cmp al, 'A'
+	jb ascii2num
+	sub al, 07h; Difference between 'A' and '9'
+ascii2num:
 	sub al, '0'
-    add bl, al
-    dec ch
-    jnz scn2x__nibble
+	add bl, al
+	dec ch
+	jnz parseNibble
 
-    mov al, bl
+	mov al, bl
 	mov ah, 00h
 	pop cx
 	pop bx
-    ret
-scn2x endp
+	ret
+input8 endp
 
-
-scn4x proc
-	push bx
-	push cx
-
-    mov ch, 4; characters to scan
-    mov cl, 4; bits in a nibble
-    mov bl, 0
-scn4x__nibble:
-	shl bx, cl
-    mov ah, 01h
-    int 21h
-
-    cmp al, 'A'
-    jb scn4x__digit
-    sub al, 07h; Difference between 'A' and '9'
-scn4x__digit:
-	sub al, '0'
-    add bl, al
-    dec ch
-    jnz scn4x__nibble
-
-    mov ax, bx
-	pop cx
-	pop bx
-    ret
-scn4x endp
-
-
-prt_x proc; (data_16, chars_16)
+print8 proc; (data_16, chars_16)
 	push bp
 	mov bp, sp
 	push bx
@@ -141,90 +112,22 @@ prt_x proc; (data_16, chars_16)
 prt_x__nibble:
 	rol bx, cl
 	mov dl, bl
-    and dl, 0fh
-    cmp dl, 0Ah
-    jb prt_x__digit
-    add dl, 7; Difference between 'A' and '9'
+	and dl, 0fh
+	cmp dl, 0Ah
+	jb prt_x__digit
+	add dl, 7; Difference between 'A' and '9'
 prt_x__digit:
 	add dl, '0'
-    mov ah, 02h
-    int 21h
-    dec ch
-    jnz prt_x__nibble
+	mov ah, 02h
+	int 21h
+	dec ch
+	jnz prt_x__nibble
 
 	pop dx
 	pop cx
 	pop bx
 	pop bp
-    ret 4
-prt_x endp
-
-
-puts proc; (string address)
-	push bp
-	mov bp, sp
-	push dx
-	push si
-
-	mov dx, [bp + 4]
-	mov ah, 09h
-	int 21h
-
-	pop si
-	pop dx
-	pop bp
-	ret 2
-endp puts
-
-putch proc; (char8 lower)
-	push bp
-	mov bp, sp
-	push dx
-
-	mov dx, [bp + 4]
-	mov ah, 02h
-	int 21h
-
-	pop dx
-	pop bp
-	ret 2
-endp putch
-
-getch proc
-	mov ah, 01h
-	int 21h
-	ret
-endp getch
-
-gets proc; (dest address)
-	push bp
-	mov bp, sp
-	push di
-	push cx
-	pushf
-
-	mov cx, 0
-	mov di, [bp + 4]
-	cld
-
-gets__loop:
-	mov ah, 01h
-	int 21h
-	cmp al, 0dh
-	jz gets__loop_end
-	stosb
-	inc cx
-	jmp gets__loop
-gets__loop_end:
-	mov al, '$'
-	stosb
-
-	mov ax, cx
-	popf
-	pop cx
-	pop di
-	pop bp
-	ret 2
-endp gets
+	ret 4
+print8 endp
 
 end

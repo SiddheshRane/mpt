@@ -47,11 +47,11 @@
 	int 21h
 
 	mov ax, a
-	mul b		;a*b
-	mov a,ax
+	add ax,  b		;a+b
+	mov a,ax		;a = a+b
 	mov ax, c
-	mul d		;c*d
-	add ax, a		;c*d + a*b
+	add ax, d		;ax = c+d
+	mul a		;c+d * a+b
 	
 	call disp16bit
 	mov ah, 4ch
