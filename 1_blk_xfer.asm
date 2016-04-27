@@ -6,8 +6,8 @@
 	a2 db 4 dup (?)
 	LEN EQU 4
 
-	msg1 db 10,13,"Enter 4 array bytes: $"
-	msg2 db 10,13,"Contents copied",10,13,"$"
+	msg1 db 10,13,"Enter 4 bytes: $"
+	msg2 db 10,13,"Copied bytes ",10,13,"$"
 
 .code
 	mov ax, @data

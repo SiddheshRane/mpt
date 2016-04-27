@@ -1,8 +1,8 @@
 .model small
 .stack 100h
 .data
-	msg1 db 10,13,"Enter number :0x$"
-	msg2 db 10,13,"Result: 0x$"
+	msg1 db 10,13,"Find factorial of 0x$"
+	msg2 db 10,13,"Factorial is 0x$"
 	endl db 10,13,"$"
 	num dw ?
 

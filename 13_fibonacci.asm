@@ -2,16 +2,16 @@
 .stack 100h
 .8086
 .data
-	msg1 db 10,13,"Enter number :0x$"
+	msg1 db 10,13,"Print n+1 fibonacci numbers, n=0x$"
 	endl db 10,13,"$"
 	num dw ?
 
 .code
 	mov ax, @data
 	mov ds, ax
-	mov ax, OFFSET msg1
-	push ax
-	call puts
+	lea dx, msg1
+	mov ah, 09h
+	int 21h
 
 	call input16
 	mov num, ax

@@ -2,7 +2,7 @@
 .stack 100h
 .8086
 .data
-	msg1 db 10,13,"Enter number :0x$"
+	msg1 db 10,13,"Find 2s complement of:0x$"
 	endl db 10,13,"$"
 
 .code

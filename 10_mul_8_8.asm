@@ -2,8 +2,8 @@
 .stack 100h
 .8086
 .data
-	msg1 db 10,13,"Enter the no 1: 0x$"
-	msg2 db 10,13,"Enter the no 2: 0x$"
+	msg1 db 10,13,"a*b",10,13,"a = 0x$"
+	msg2 db 10,13,"b = 0x$"
 	endl db 10,13,"$"
 	msg_hex db "0x$"
 	msg_mul db " * $"

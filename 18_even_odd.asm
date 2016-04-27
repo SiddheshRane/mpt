@@ -2,7 +2,7 @@
 .stack 100h
 .8086
 .data
-	msg1 db 10,13,"Enter the no : 0x$"
+	msg1 db 10,13,"Odd/Even",10,13,"Input : 0x$"
 	msg2 db 10,13,"Number is even$"
 	msg3 db 10,13,"Number is odd$"
 
